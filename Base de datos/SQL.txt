@@ -1,0 +1,110 @@
+CREATE DATABASE chats;
+USE chats;        
+                  
+                  
+CREATE TABLE usuario (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  nombreUser VARCHAR(50),
+  contraseña VARCHAR(50),
+  fotoPerfil VARCHAR(100)
+);             
+                  
+CREATE TABLE estado(
+                  
+id INT PRIMARY KEY AUTO_INCREMENT,
+ estadoAmigo VARCHAR(50)
+);                
+                  
+INSERT INTO estado (estadoAmigo) VALUES
+ 
+("Enviado"),      
+("Rechazado"),    
+("Aceptado");     
+                  
+CREATE TABLE amigoUser (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  sender_id INT NOT NULL,
+  receiver_id INT NOT NULL,
+  EstadoId INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (EstadoId) REFERENCES estado(id),
+  FOREIGN KEY (sender_id) REFERENCES usuario(id),
+  FOREIGN KEY (receiver_id) REFERENCES usuario(id)
+);                
+                  
+
+                  
+CREATE TABLE Wallpaper (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  fondo VARCHAR(500),
+  idUserFondo INT,
+  FOREIGN KEY (idUserFondo) REFERENCES usuario(id)
+);                
+                  
+                  
+                  
+CREATE TABLE messages (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  sender VARCHAR(255) NOT NULL,
+  recipient VARCHAR(255) NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);                
+    
+
+CREATE TABLE dibujo (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  sender VARCHAR(255) NOT NULL,
+  recipient VARCHAR(255) NOT NULL,
+  image BLOB NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);                          
+                  
+INSERT INTO usuario (nombreUser, contraseña, fotoPerfil) VALUES
+("Usuario1", "12345678", "perfil2.png"),
+("Usuario2", "12345678", "perfil2.png"),
+("Usuario3", "12345678", "perfil2.png"),
+("Usuario4", "12345678", "perfil2.png"),
+("Usuario5", "12345678", "perfil2.png"),
+("Usuario6", "12345678", "perfil2.png"),
+("Usuario7", "12345678", "perfil2.png"),
+("Usuario8", "12345678", "perfil2.png"),
+("Usuario9", "12345678", "perfil2.png"),
+("Usuario10", "12345678", "perfil2.png"),
+("Usuario11", "12345678", "perfil2.png"),
+("Usuario12", "12345678", "perfil2.png"),
+("Usuario13", "12345678", "perfil2.png"),
+("Usuario14", "12345678", "perfil2.png"),
+("Usuario15", "12345678", "perfil2.png"),
+("Usuario16", "12345678", "perfil2.png"),
+("Usuario17", "12345678", "perfil2.png"),
+("Usuario18", "12345678", "perfil2.png"),
+("Usuario19", "12345678", "perfil2.png"),
+("Usuario20", "12345678", "perfil2.png");
+                  
+                  
+    INSERT INTO amigoUser (sender_id, receiver_id, EstadoId, created_at)
+VALUES (1, 2, 1, NOW());              
+                  
+INSERT INTO Wallpaper (idUserFondo, fondo) VALUES
+(1, "fondo.jpg"), 
+(2, ""),          
+(3, "fondo.jpg"), 
+(4, "fondo.jpg"), 
+(5, "fondo.jpg"), 
+(6, "fondo.jpg"), 
+(7, "fondo.jpg"), 
+(8, "fondo.jpg"), 
+(9, "fondo.jpg"), 
+(10, "fondo.jpg"),
+(11, "fondo.jpg"),
+(12, "fondo.jpg"),
+(13, "fondo.jpg"),
+(14, "fondo.jpg"),
+(15, "fondo.jpg"),
+(16, "fondo.jpg"),
+(17, "fondo.jpg"),
+(18, "fondo.jpg"),
+(19, "fondo.jpg"),
+(20, "fondo.jpg");
+

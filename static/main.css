@@ -1,0 +1,315 @@
+body{
+  margin: o;
+  padding: 0;
+}
+
+  #messages { list-style-type: none; margin: 0; padding: 0; }
+  #messages li { padding: 5px 10px; }
+  .me { 
+      text-align: right;
+      background: #a9e0f6;
+      border: 1px solid #ccc;
+border-radius: 5px;
+padding: 10px;
+margin-bottom: 10px;
+font-family: Arial, sans-serif;
+font-size: 14px;
+}
+  .others {
+       background: #cfcece;
+       text-align: left;
+      border: 1px solid #ccc;
+border-radius: 5px;
+padding: 10px;
+margin-bottom: 10px;
+font-family: Arial, sans-serif;
+font-size: 14px;
+}
+
+
+
+
+    /* Estilos para el formulario de chat */
+    .chat-container {
+      margin-top: 20px;
+    }
+
+    #messages {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #chat-form {
+      display: flex;
+      margin-top: 10px;
+    }
+
+    #chat-form input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    #chat-form button {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #chat-form button:hover {
+      background-color: #45a049;
+    }
+
+
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+  }
+
+  .total {
+      display: flex;
+      height: 85.5%;
+  }
+
+
+  .izq {
+    background-color:darkgrey;
+    border-left: 2px solid black;
+      width: 90px;
+  }
+
+  .der {
+      flex: 1;
+  }
+
+  .herramientas{
+    width: 70px;
+  height: 70px;
+  margin-left: 5px;
+  margin-top: 5px;
+  
+  }
+
+  .imgStyle{
+    width: 60px;
+  height: 60px;
+  margin-left: 5px;
+  margin-top: 5px;
+ 
+  }
+
+
+
+  #miLista {
+display: none; /* Oculta la lista inicialmente */
+}
+
+.containerSoli {
+display: flex;
+}
+
+.izq {
+position: relative;
+}
+
+.herramientas {
+cursor: pointer;
+}
+
+.espacio {
+
+background-color: white;
+border: 1px solid black;
+display: none;
+position: fixed;
+top: 43%;
+left: 84%;
+transform: translate(-50%, -50%);
+z-index: 9999;
+}
+
+/* Estilo del contenedor */
+#espacioBlanco {
+width: 400px; /* Tamaño fijo del contenedor */
+height: 300px; /* Tamaño fijo del contenedor */
+overflow: auto; /* Habilita el scroll cuando el contenido desborda el tamaño fijo */
+}
+/* Estilo del formulario */
+.lista-usuarios form {
+  display: flex; /* Utiliza flexbox para alinear los elementos en una fila */
+  align-items: center; /* Centra verticalmente los elementos en el formulario */
+  justify-content: space-between; /* Alinea el botón a la izquierda */
+  margin-bottom: 10px; /* Espacio entre cada formulario */
+}
+
+/* Estilo del input */
+.lista-usuarios input {
+  display: none; /* Oculta el input */
+}
+
+/* Estilo del texto del usuario */
+.nombre-usuario {
+  font-size: 16px; /* Tamaño del texto del nombre del usuario */
+  margin-right: 10px; /* Espacio entre el texto y el botón */
+}
+
+/* Estilo del botón */
+.btnEnviarSolicitud {
+  background-color: #007bff; /* Color azul para el fondo del botón */
+  color: #fff; /* Color blanco para el texto del botón */
+  border: none;
+  border-radius: 30px; /* Radio para hacer el botón redondo */
+  cursor: pointer;
+  font-size: 16px;
+  outline: none;
+  padding: 10px 20px;
+}
+  
+  .round-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .container {
+    background-color: rgb(243, 168, 199);
+    width: auto;
+    height: 95px;
+    overflow-x: auto;
+    white-space: nowrap;
+    cursor: grab;
+    border-bottom: 2px solid black;
+    
+  }
+  
+  .scroll-container {
+    display: inline-block;
+    padding: 10px;
+  }
+  
+  .list {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .list li {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-right: 10px;
+  }
+  
+  .list img {
+    width: 100px;
+  }
+  
+  .list .text {
+    margin-top: 10px;
+  }
+  
+
+     /* Estilos para el contenedor principal */
+     .container {
+        background-color: #f2f2f2;
+        padding: 3px;
+      }
+  
+      /* Estilos para la lista de usuarios */
+      .list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+  
+      .list li {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+      }
+  
+      .round-image {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+  
+      .user-name {
+        font-weight: bold;
+      }
+  
+      /* Estilos para el contenedor del chat */
+      .containerM {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+        padding: 10px;
+        margin-right: 10%;
+        margin-left: 10%;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+  
+      .titulo {
+        font-size: 24px;
+        margin: 0;
+      }
+  
+      .content {
+        width: 100%;
+        margin-top: 20px;
+      }
+  
+      .old-messages {
+        
+        max-height: 400px;
+        overflow-y: auto;
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+      }
+  
+      .old-messages ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+  
+      .old-messages li {
+        margin-bottom: 10px;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+  
+      .me {
+        background-color: #a9e0f6;
+        text-align: right;
+      }
+  
+      .others {
+        background-color: #cfcece;
+        text-align: left;
+      }
+  
+      #message-input{
+        width: 100%;
+      }

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Main</title>
+  <link href="/main.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  
+  <style>
+
+
+
+
+
+#dibujoDiv {
+  position: fixed;
+  top: 15%;
+  left: 15%;
+  width: 70%;
+  height: 70%;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  display: none;
+}
+
+.cabecera {
+  background-color: #525050;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+}
+
+.tools, .div2 {
+  height: 100%;
+  line-height: 70px;
+  text-align: center;
+}
+
+.tools {
+  background-color: #48939a;
+  width: 15%;
+  float: left;
+}
+
+.div2 {
+
+  width: 85%;
+  float: left;
+}
+
+
+
+.cerrar {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+} 
+
+.color{
+  height: 40px;
+  width: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  cursor: pointer;
+  display: inline-block;
+  box-sizing:border-box;
+  border-radius: 50%;
+  border: 2px solid black;
+  align-self: center;
+}
+
+.buttonPaint{
+  align-self: center;
+  width: 70px;
+  height: 40px;
+  border: 2px solid black;
+  cursor: pointer;
+  color: black;
+  background: white;
+  font-weight: bold;
+
+}
+
+.color-picker {
+  border: none;
+  width: 150px;
+  height: 80px;
+  cursor: pointer;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+canvas{
+  background-color: white;
+  
+}
+
+
+
+
+
+/* Estilo del botón para abrir el menú */
+#openMenuButton {
+  position: relative;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+}
+
+/* Estilo del botón para abrir el menú */
+#openMenuButton {
+  position: fixed;
+  top: 120px;
+  right: 83px; /* Colocado en la parte del menú que se verá antes de abrirlo */
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  
+}
+
+/* Estilo del menú */
+#sideMenu {
+  position: fixed;
+  top: 103px;
+  right: -500px; /* Empieza oculto en el lado derecho */
+  width: 500px; /* Menú un poco más grande */
+  height: 500px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  padding: 50px;
+  transition: right 0.3s ease-in-out; /* Animación de transición hacia el lado derecho */
+  
+}
+
+/* Estilo del botón para cerrar el menú */
+#closeMenuButton {
+  position: absolute;
+  top: 17px;
+  right: 83px;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* Estilo de las opciones del menú */
+#sideMenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0; /* Elimina el margen en las opciones del menú */
+}
+
+#sideMenu li {
+  margin-bottom: 10px;
+  margin-left: 30px;
+}
+
+#sideMenu a {
+  color: #333;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+#sideMenu a:hover {
+  background-color: #f1f1f1;
+}
+
+
+
+  </style>
+</head>
+<body>
+  <div class="container" style="z-index: 100;">
+    <div class="scroll-container">
+      <ul class="list">
+        <% users.forEach(function(user) { %>
+          <li class="no-bullets" data-username="<%= user.nombreUser %>" onclick="ocultarChalra()" onclick="ocultarChalra(this)">
+            <img src="/perfil/<%= user.fotoPerfil %>" alt="User Profile Picture" class="round-image">
+            <strong class="user-name"><%= user.nombreUser %></strong>
+          </li>
+        <% }); %>
+      </ul>
+    </div>
+  </div>
+   
+  
+<div class="total">
+
+  
+<h1 id="UserNameId" style="display: none;"><%- username %></h1>
+  <div class="der">
+
+    <button id="openMenuButton"> </button>
+    <nav id="sideMenu">
+      <button id="closeMenuButton"></button>
+      <h2 id="destinatario">Mi Galeria</h2>
+      <ul id="Dibujos">
+        <% drawingsData.drawings.forEach(function(drawing) { %>
+          <li>
+            <strong><%= drawing.sender %>:</strong>
+            <img width="50px" height="50px" src="<%= drawing.image %>" />
+          </li>
+        <% }); %>
+      </ul>
+
+      <ul id="Dibujos">
+        <% if (typeof dibujos !== 'undefined') { %>
+          <li><%= dibujo.image %></li>  
+        <% } %>
+      </ul>
+    </nav>
+    
+
+
+    
+    <div class="containerM">
+      <div class="title-wrapper">
+        <% if (selectedUser) { %>
+          <h1 class="titulo">Chat De <%= selectedUser %></h1>
+        <% } %>
+      </div>
+      <div class="content">
+        <h2 id="userNAME"><%= selectedUser %></h2>
+        <div class="containerMssg">
+          <div class="old-messages">
+            <ul id="miLista">
+              <% oldMessages.forEach(function(messagesData) { %>
+                <% messagesData.messages.forEach(function(message) { %>
+                  <li>
+                    <strong><%= message.sender %>:</strong> <%= message.message %>
+                  </li>
+                <% }); %>
+              <% }); %>
+            </ul>
+            <div class="chat-container">
+              <ul id="messages"></ul>
+              <form id="chat-form">
+                <input id="recipient-input" placeholder="Destinatario" autocomplete="off" value="<%= selectedUser %>" style="display: none;" />
+                <input id="message-input" autocomplete="off" placeholder="Mensaje" />
+                <button type="submit">Enviar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+  </div>
+  <div class="containerSoli">
+    <div class="izq">
+      <img class="herramientas imgStyle" src="/perfil/soliAmistad.png" alt="">
+      <img class="enviarDibujo imgStyle" src="/perfil/enviar.png" alt="">
+      <img class="MyUser imgStyle" src="/perfil/editar.png" alt="">
+      <img class="Salir imgStyle" src="/perfil/salir.png" alt="">
+      
+    </div>
+
+
+   
+
+      <div id="dibujoDiv">
+        <div class="cabecera">Envie su dibujo</div>
+        <button class="cerrar"><i class="fa-solid fa-xmark"></i></button>
+
+        
+        <div class="tools">
+          <div>
+              
+              <button type="button" class="buttonPaint" onclick="clearCanvas()">Clear</button>
+          </div>
+          <div>
+              <div class="color" style="background: red;" onclick="setColor('red')"></div>
+              <div class="color" style="background: blue;" onclick="setColor('blue')"></div>
+              <div class="color" style="background: green;" onclick="setColor('green')"></div>
+              <div class="color" style="background: black;" onclick="setColor('black')"></div>
+              <div class="color" style="background: white;" onclick="setColor('white')"></div>
+              <div class="color" style="background: yellow;" onclick="setColor('yellow')"></div>
+          </div>
+          <div>
+              <input type="color" class="color-picker" onchange="setColorPicker()">
+          </div>
+          <div>
+              <input type="range" min="1" max="50" class="tamañoLapiz" onchange="setLineWidth()">
+          </div>
+          <div>
+              <button type="button" class="buttonPaint" onclick="enableEraser()">Eraser</button>
+             
+          </div>
+      </div>
+
+
+        <div id="mainDibujo" class="div2">
+
+          <canvas id="lienzo" width="400" height="400" style="border: 1px solid black;">
+          
+            
+          </canvas>
+
+          <button id="saveButton">Guardar Dibujo</button>
+        </div>
+
+        
+       
+
+      
+      </div>
+              
+   
+
+
+    <!-- Caja de solicitudes de amistad -->
+    <div class="espacio" id="espacioBlanco">
+
+      <ul class="lista-usuarios">
+        <% MostrarAc.forEach(function(userr) { %> <!-- Cambiar 'username' o 'user' a 'userr' -->
+          <li class="usuario-item">
+            <form action="/rechazarSolicitud" method="post">
+              <input type="hidden" name="receiver_id" >
+              <span class="nombre-usuario"><%= userr.nombreUser %></span> 
+
+              <div class="botones">
+                <button class="btnAceptarSolicitud" data-id="<%= userr.id %>" data-username="<%= userr.nombreUser %>"><i class="fa-sharp fa-regular fa-circle-check"></i></button> 
+                <button class="btnRechazarSolicitud" data-id="<%= userr.id %>" data-username="<%= userr.nombreUser %>"><i class="fa-solid fa-xmark"></i></button></div>
+              </form>
+          </li>
+        <% }); %>
+      </ul>
+
+
+      <ul class="lista-usuarios">
+        <% usersSoli.forEach(function(userr) { %> <!-- Cambiar 'username' o 'user' a 'userr' -->
+          <li class="usuario-item">
+            <form action="/enviarSolicitud" method="post">
+              <input type="hidden" name="receiver_id" value="<%= userr.id %>"> <!-- Cambiar 'username' o 'user' a 'userr' -->
+              <span class="nombre-usuario"><%= userr.nombreUser %></span> <!-- Cambiar 'username' o 'user' a 'userr' -->
+              <button class="btnEnviarSolicitud" data-id="<%= userr.id %>" data-username="<%= userr.nombreUser %>"><i class="fa-solid fa-user-plus"></i></button> <!-- Cambiar 'username' o 'user' a 'userr' -->
+            </form>
+          </li>
+        <% }); %>
+      </ul>
+
+
+    </div>
+    
+    
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/main.js"></script>
+  <script>
+
+const userItems = document.querySelectorAll('.no-bullets');
+  userItems.forEach((userItem) => {
+    userItem.addEventListener('click', (e) => {
+      const selectedUser = e.currentTarget.dataset.username;
+
+      // Emitir una solicitud de mensajes antiguos al servidor
+      socket.emit('request old messages', { recipient: selectedUser });
+
+      // Actualizar el usuario seleccionado en la interfaz
+      document.querySelector('h2').textContent = `${selectedUser}`;
+      const myInput = document.getElementById("recipient-input");
+
+      // Obtener el contenido del elemento <h1> con el id "UserNameId"
+      const h1Element = document.getElementById('UserNameId');
+      const usernameText = h1Element.textContent;
+
+      // Llamar a la función actualizarDibujos con los parámetros sender y recipient
+      actualizarDibujos(usernameText, selectedUser);
+      
+      // Cambiar el valor del elemento de entrada
+      myInput.value = selectedUser;
+    });
+  });
+
+  function actualizarDibujos(sender, recipient) {
+
+    // ELiminar todos los li dentro del ul
+
+    const ulElement = document.getElementById('Dibujos');
+while (ulElement.firstChild) {
+  ulElement.removeChild(ulElement.firstChild); // Elimina el primer hijo del ul hasta que ya no haya más elementos
+}
+  // Realizar la solicitud POST a la ruta "/actualizarDibujos"
+  $.get('/actualizarDibujos', {
+    sender: sender,
+    recipient: recipient
+  }, function(data, status) {
+    
+   
+  });
+}
+
+
+
+
+// Obtener referencias a los elementos del DOM
+const openMenuButton = document.getElementById('openMenuButton');
+const closeMenuButton = document.getElementById('closeMenuButton');
+const sideMenu = document.getElementById('sideMenu');
+
+// Función para abrir el menú con animación
+function openMenu() {
+  sideMenu.style.right = '0'; // Abre el menú hacia el lado derecho
+}
+
+// Función para cerrar el menú con animación
+function closeMenu() {
+  sideMenu.style.right = '-500px'; // Cierra el menú hacia el lado derecho
+}
+
+// Evento para abrir el menú al hacer clic en el botón de abrir
+openMenuButton.addEventListener('click', openMenu);
+
+// Evento para cerrar el menú al hacer clic en el botón de cerrar
+closeMenuButton.addEventListener('click', closeMenu);
+
+
+// Ejecutar el código después de que la página se haya cargado completamente
+document.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('lienzo');
+  const ctx = canvas.getContext('2d');
+
+
+        canvas.width = 912;
+        canvas.height = 498;
+
+        // Variables para almacenar la posición anterior del ratón
+        let prevX, prevY;
+
+        // Bandera para indicar si el ratón está presionado o no
+        let isDrawing = false;
+
+        // Configurar color y tamaño inicial
+        let color = 'black';
+        let lineWidth = 5;
+        let eraserSize = 5;
+
+        // Historial de acciones (para deshacer y rehacer)
+        let actionsHistory = [];
+        let currentActionIndex = -1;
+
+        // Función para obtener las coordenadas del ratón en relación con el lienzo
+        function getMousePos(event) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: event.clientX - rect.left,
+                y: event.clientY - rect.top
+            };
+        }
+
+        // Función para dibujar en el lienzo
+        function dibujar(event) {
+            if (!isDrawing) return;
+
+            const mousePos = getMousePos(event);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = lineWidth;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round'; // Añadir esta línea para unir los trazos suavemente
+
+            ctx.beginPath();
+            ctx.moveTo(prevX, prevY);
+            ctx.lineTo(mousePos.x, mousePos.y);
+            ctx.stroke();
+
+            prevX = mousePos.x;
+            prevY = mousePos.y;
+        }
+
+        // Eventos del ratón para dibujar
+        canvas.addEventListener('mousedown', (event) => {
+            isDrawing = true;
+            const mousePos = getMousePos(event);
+            prevX = mousePos.x;
+            prevY = mousePos.y;
+            dibujar(event);
+
+            // Agregar el trazo actual al historial de acciones
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            actionsHistory = actionsHistory.slice(0, currentActionIndex + 1);
+            actionsHistory.push(imageData);
+            currentActionIndex++;
+        });
+
+        canvas.addEventListener('mousemove', dibujar);
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('mouseout', () => isDrawing = false);
+
+        // Función para deshacer
+        function undo() {
+            if (currentActionIndex > 0) {
+                currentActionIndex--;
+                ctx.putImageData(actionsHistory[currentActionIndex], 0, 0);
+            }
+        }
+
+        // Función para rehacer
+        function redo() {
+            if (currentActionIndex < actionsHistory.length - 1) {
+                currentActionIndex++;
+                ctx.putImageData(actionsHistory[currentActionIndex], 0, 0);
+            }
+        }
+
+        // Función para limpiar el lienzo
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            actionsHistory = [];
+            currentActionIndex = -1;
+        }
+
+        // Función para establecer el color del pincel
+        function setColor(newColor) {
+            color = newColor;
+            ctx.globalCompositeOperation = 'source-over'; // Restaurar la composición global
+        }
+
+        // Función para establecer el color del pincel desde el selector de color
+        function setColorPicker() {
+            color = document.querySelector('.color-picker').value;
+            ctx.globalCompositeOperation = 'source-over'; // Restaurar la composición global
+        }
+
+        // Función para establecer el ancho de línea
+        function setLineWidth() {
+            lineWidth = document.querySelector('.tamañoLapiz').value;
+            eraserSize = lineWidth; // Establecer el tamaño de la goma igual al tamaño del lápiz
+            ctx.globalCompositeOperation = 'source-over'; // Restaurar la composición global
+        }
+
+        // Función para habilitar la goma de borrar
+        function enableEraser() {
+            color = 'rgba(255, 255, 255, 1)'; // Establecer el color de la goma como blanco opaco
+            ctx.globalCompositeOperation = 'destination-out'; // Cambiar la composición global del contexto
+            eraserSize = lineWidth; // Establecer el tamaño inicial del borrador igual al tamaño del lápiz
+        }
+
+        // Función para habilitar el tarrito de pintura (rellenar el área limitada con el color actual)
+        function enableFill() {
+            // Habilitar la función de rellenado (bucket tool)
+            canvas.removeEventListener('mousedown', dibujar);
+            canvas.removeEventListener('mousemove', dibujar);
+            canvas.removeEventListener('mouseup', () => isDrawing = false);
+            canvas.removeEventListener('mouseout', () => isDrawing = false);
+            canvas.addEventListener('click', fillArea);
+        }
+
+        // Función para rellenar el área con el color seleccionado
+        function fillArea(event) {
+            // Obtener el color actual del canvas
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const canvasColor = getPixelColor(imageData, 0, 0);
+
+            const mousePos = getMousePos(event);
+            const pixelColor = getPixelColor(imageData, mousePos.x, mousePos.y);
+
+            // Rellenar el área limitada con el color seleccionado
+            fill(mousePos.x, mousePos.y, canvasColor, pixelColor);
+        }
+
+        // Función para rellenar el área con el color seleccionado
+        function fill(startX, startY, targetColor, fillColor) {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixelStack = [[startX, startY]];
+
+            if (colorsMatch(targetColor, fillColor)) {
+                return;
+            }
+
+            while (pixelStack.length) {
+                const newPos = pixelStack.pop();
+                const x = newPos[0];
+                const y = newPos[1];
+
+                if (x < 0 || x >= canvas.width || y < 0 || y >= canvas.height) {
+                    continue; // Ignorar píxeles fuera del área del lienzo
+                }
+
+                const pixel = getPixelColor(imageData, x, y);
+
+                if (colorsMatch(pixel, targetColor)) {
+                    // Si el color del píxel coincide con el color de destino, llenarlo con el nuevo color
+                    setPixelColor(imageData, x, y, fillColor);
+
+                    // Agregar vecinos a la pila para procesarlos también
+                    pixelStack.push([x + 1, y]);
+                    pixelStack.push([x - 1, y]);
+                    pixelStack.push([x, y + 1]);
+                    pixelStack.push([x, y - 1]);
+                }
+            }
+
+            ctx.putImageData(imageData, 0, 0); // Actualizar el lienzo con los cambios
+            ctx.globalCompositeOperation = 'source-over'; // Restaurar la composición global
+
+            // Volver a habilitar la función de dibujar después del rellenado
+            canvas.addEventListener('mousedown', (event) => {
+                isDrawing = true;
+                const mousePos = getMousePos(event);
+                prevX = mousePos.x;
+                prevY = mousePos.y;
+                dibujar(event);
+
+                // Agregar el trazo actual al historial de acciones
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                actionsHistory = actionsHistory.slice(0, currentActionIndex + 1);
+                actionsHistory.push(imageData);
+                currentActionIndex++;
+            });
+            canvas.addEventListener('mousemove', dibujar);
+            canvas.addEventListener('mouseup', () => isDrawing = false);
+            canvas.addEventListener('mouseout', () => isDrawing = false);
+        }
+
+        // Función para obtener el color de un píxel
+        function getPixelColor(imageData, x, y) {
+            const index = (y * imageData.width + x) * 4;
+            return [
+                imageData.data[index],
+                imageData.data[index + 1],
+                imageData.data[index + 2],
+                imageData.data[index + 3]
+            ];
+        }
+
+        // Función para comparar dos colores en formato [r, g, b, a]
+        function colorsMatch(color1, color2) {
+            return color1[0] === color2[0] && color1[1] === color2[1] && color1[2] === color2[2] && color1[3] === color2[3];
+        }
+
+        // Función para establecer el color de un píxel
+        function setPixelColor(imageData, x, y, color) {
+            const index = (y * imageData.width + x) * 4;
+            imageData.data[index] = color[0];
+            imageData.data[index + 1] = color[1];
+            imageData.data[index + 2] = color[2];
+            imageData.data[index + 3] = color[3];
+        }
+
+
+  // Evento del botón para guardar el dibujo
+  const saveButton = document.getElementById('saveButton');
+  saveButton.addEventListener('click', () => {
+    // Obtener el contenido del canvas como una imagen en formato base64
+    const imageBase64 = canvas.toDataURL('image/png');
+
+    //Obtiene valor de sender
+    const sender = document.getElementById('UserNameId');
+      const nameSender = sender.textContent;
+      
+
+    //Obtiene el valor de recipient
+
+    const recipient = document.getElementById('destinatario');
+      const namerecipient = recipient.textContent;
+
+    // Datos del dibujo que el usuario ingresa (nombre y descripción)
+    const nombreDibujo = nameSender;
+    const descripcionDibujo = namerecipient;
+
+    // Enviar los datos al servidor usando una solicitud HTTP (por ejemplo, mediante fetch)
+    fetch('/guardar_dibujo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        nombre: nombreDibujo,
+        imagen: imageBase64,
+        descripcion: descripcionDibujo
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Dibujo guardado en el servidor:', data);
+    })
+    .catch(error => {
+      console.error('Error al guardar el dibujo:', error);
+    });
+  });
+});
+
+
+
+
+
+const enviarDibujoImg = document.querySelector('.enviarDibujo');
+const dibujoDiv = document.getElementById('dibujoDiv');
+
+
+
+
+
+ // Obtener el elemento canvas
+ 
+        
+
+
+
+
+function ocultarChalra(){
+  const ulLista = document.getElementById("messages"); // Obtener el elemento <ul>
+  const liElementos = ulLista.querySelectorAll("li"); // Obtener todos los elementos <li>
+
+  // Recorrer la lista de elementos <li> y borrar su contenido
+    liElementos.forEach((li) => {
+    li.remove();
+  });
+
+}
+
+// Agregar un evento de clic a la imagen
+enviarDibujoImg.addEventListener('click', () => {
+  // Mostrar el div oculto cuando se hace clic en la imagen
+  dibujoDiv.style.display = 'block';
+});
+
+// Obtener la referencia del botón de cerrar
+const cerrarBtn = document.querySelector('.cerrar');
+
+// Agregar un evento de clic al botón de cerrar
+cerrarBtn.addEventListener('click', () => {
+  // Ocultar el div cuando se hace clic en el botón de cerrar
+  dibujoDiv.style.display = 'none';
+});
+
+    
+    
+  </script>
+</body>
+</html>
